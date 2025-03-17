@@ -23,6 +23,12 @@
 			<version>3.0.0-M7</version>
 			<type>maven-plugin</type>
 		</dependency>
+		<dependency>
+			<groupId>org.evosuite</groupId>
+			<artifactId>evosuite-standalone-runtime</artifactId>
+			<version>1.0.6</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -44,6 +50,54 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.17.0</version>
+
+				<configuration>
+					<targetClasses>
+						<param>maven.*</param>
+					</targetClasses>
+					<targetTests>
+						<param>maven.*</param>
+					</targetTests>
+				</configuration>
+
+				<dependencies>
+					<!-- https://mvnrepository.com/artifact/org.pitest/pitest-junit5-plugin -->
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>1.2.1</version>
+					</dependency>
+				</dependencies>
+
+			</plugin>
+
+			<plugin>
+				<groupId>org.evosuite.plugins</groupId>
+				<artifactId>evosuite-maven-plugin</artifactId>
+				<version>1.0.6</version>
+				<executions>
+					<execution>
+						<id>evosuite-generate</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<phase>process-test-classes</phase>
+					</execution>
+					<execution>
+						<id>evosuite-export</id>
+						<goals>
+							<goal>export</goal>
+						</goals>
+						<phase>process-test-classes</phase>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 </project>
